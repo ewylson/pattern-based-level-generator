@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Chunk Room Generation"
+config/name="Level Fragment Generator"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
 
