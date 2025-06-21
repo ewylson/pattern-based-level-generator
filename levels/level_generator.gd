@@ -8,6 +8,12 @@ var __obstacle_layers : Array[TileMapLayer]
 
 
 func _ready() -> void:
+	var presets : Array[PackedByteArray] = TileMapDataHandler.unpack(preload("res://tilemap/data/test.res"))
+	$ObstacleLayers/ChunkLayer.tile_map_data = presets.pick_random()
+	return
+
+
+func __init_generator() -> void:
 	__obstacle_layers.assign($ObstacleLayers.get_children())
 	if not __obstacle_layers.is_empty():
 		__generate_level()
@@ -25,12 +31,12 @@ func __generate_level() -> void:
 			# CRITICAL: If there is no preset of the required size, the program will never leave this loop.
 			if layer.get_used_rect().size >= preset_layer.get_used_rect().size:
 				break
-		__set_chunk(preset_layer, layer)
+		__set_fragment(preset_layer, layer)
 	
 	return
 
 
-func __set_chunk(from: TileMapLayer, to: TileMapLayer) -> void:
+func __set_fragment(from: TileMapLayer, to: TileMapLayer) -> void:
 	var origin_layer_size : Vector2i = from.get_used_rect().size
 	var origin_layer_cells : Array[Vector2i] = from.get_used_cells()
 	for x in range(origin_layer_size.x):
