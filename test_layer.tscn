@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://cippqejystxuw"]
+
+[ext_resource type="TileSet" uid="uid://cx33qg7lckoqm" path="res://art/prototype_tileset.tres" id="1_nj5bh"]
+
+[sub_resource type="GDScript" id="GDScript_vy8vj"]
+script/source = "extends Node
+
+
+func _ready() -> void:
+	var layers : Array[TileMapLayer]
+	layers.assign(get_children())
+	TileMapDataHandler.save_from_layers(layers, \"test.res\")
+	return
+"
+
+[node name="Node" type="Node"]
+script = SubResource("GDScript_vy8vj")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 5, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 1, 0, 0, 0, 5, 0, 5, 0, 0, 0, 0, 0, 1, 0, 0, 0)
+tile_set = ExtResource("1_nj5bh")
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="."]
+position = Vector2(0, 112)
+tile_map_data = PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0, 1, 0, 0, 0, 3, 0, 5, 0, 0, 0, 0, 0, 1, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 0, 1, 0, 0, 0)
+tile_set = ExtResource("1_nj5bh")
