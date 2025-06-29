@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=4 uid="uid://cbw8ae2hmaxfi"]
 
-[ext_resource type="Script" path="res://levels/level_generator.gd" id="1_uq11j"]
+[ext_resource type="Script" uid="uid://c0pu1opkxd8ba" path="res://levels/level_generator.gd" id="1_uq11j"]
 [ext_resource type="TileSet" uid="uid://cx33qg7lckoqm" path="res://tilemap/tilesets/prototype_tileset.tres" id="2_a7m4n"]
 
 [node name="DemoLevel" type="Node"]
