@@ -24,7 +24,7 @@ func _init(p_chunk_size: Vector2i, p_tile_map_layer: TileMapLayer) -> void:
 
 func get_patterns_from_chunks() -> Array[TileMapPattern]:
 	var patterns : Array[TileMapPattern]
-	var presets_grid_size : Vector2i = __get_chunks_grid_size()
+	var presets_grid_size : Vector2i = __get_chunk_grid_size()
 	for row in range(presets_grid_size.x):
 		for col in range(presets_grid_size.y):
 			var cells : Array[Vector2i] = __get_cells_on_chunk(Vector2i(row, col))
@@ -33,7 +33,7 @@ func get_patterns_from_chunks() -> Array[TileMapPattern]:
 	return patterns
 
 
-func __get_chunks_grid_size() -> Vector2i:
+func __get_chunk_grid_size() -> Vector2i:
 	var rect_sizef : Vector2 = tile_map_layer.get_used_rect().size
 	return Vector2i(ceili(rect_sizef.x / chunk_size.x), ceili(rect_sizef.y / chunk_size.y))
 
