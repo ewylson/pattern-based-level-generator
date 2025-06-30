@@ -5,9 +5,8 @@
 
 [node name="DemoLevel" type="Node"]
 
-[node name="TileMap" type="Node2D" parent="." node_paths=PackedStringArray("ground_layer", "obstacles_layer")]
+[node name="TileMap" type="Node2D" parent="." node_paths=PackedStringArray("obstacles_layer")]
 script = ExtResource("1_uq11j")
-ground_layer = NodePath("GroundLayer")
 obstacles_layer = NodePath("ObstaclesLayer")
 metadata/_edit_lock_ = true
 
