@@ -9,11 +9,12 @@ enum {
 }
 
 
+@export_enum("Pattern Picker", "Perlin Noise") var generation_method : int = 0
 @export var obstacles_layer : TileMapLayer
 
 @export_group("Chunk Grid")
 @export var chunk_size := Vector2i(5, 5)
-@export var chunk_grid_padding := Vector2i(2, 2)
+@export var chunk_grid_padding := Vector2i(1, 1)
 
 
 var __regular_patterns : Array[TileMapPattern] = TileMapPatternPacker.unpack(preload("res://tilemap/data/regular_patterns.res"))
@@ -28,7 +29,11 @@ var __chunk_grid_map : Array[Array] = [
 
 
 func _ready() -> void:
-	__fill_chunks_with_patterns()
+	match generation_method:
+		0:
+			__fill_chunks_with_patterns()
+		1:
+			__fill_chunks_with_noise()
 	return
 
 
@@ -59,5 +64,22 @@ func __is_proper_chunk(chunk: int, chunk_types: Array[int]) -> bool:
 
 
 func __get_start_cell_on_chunk(chunk_coords: Vector2i) -> Vector2i:
-	var cell_coords_offset : Vector2i = chunk_grid_padding / 2
-	return Vector2i(chunk_coords.x * chunk_size.x + cell_coords_offset.x, chunk_coords.y * chunk_size.y + cell_coords_offset.y)
+	return Vector2i(chunk_coords.x * chunk_size.x + chunk_grid_padding.x, chunk_coords.y * chunk_size.y + chunk_grid_padding.y)
+
+
+func __fill_chunks_with_noise() -> void:
+	const OBSTACLE_NOISE_VALUE : float = -0.2
+	var perlin_noise : FastNoiseLite = __create_perlin_noise(randi(), 0.350)
+	for x in range(chunk_size.x * __chunk_grid_map.size()):
+		for y in range(chunk_size.y * __chunk_grid_map.front().size()):
+			if perlin_noise.get_noise_2d(x, y) < OBSTACLE_NOISE_VALUE:
+				obstacles_layer.set_cell(Vector2i(x + chunk_grid_padding.x, y + chunk_grid_padding.y), 0, Vector2i(0, 1))
+	return
+
+
+func __create_perlin_noise(noise_seed: int, frequency: float = 0.01) -> FastNoiseLite:
+	var noise := FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	noise.seed = noise_seed
+	noise.frequency = frequency
+	return noise
